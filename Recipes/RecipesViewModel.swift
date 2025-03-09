@@ -64,10 +64,15 @@ class RecipesViewModel{
         }
     }
 
+    static var firstURL: URL? = nil
+
     func makeRecipeFromDTO(_ recipe: RecipeDTO) -> RecipeViewModel {
         let imageURL: URL?
         if let photoURLString = recipe.photoURLSmall,
            let url = URL(string: photoURLString) {
+            if Self.firstURL == nil {
+                Self.firstURL = url
+            }
             imageURL = url
         } else {
             imageURL = nil // not tested, would need to create stub data that has a nil value for photoURLSmall
@@ -76,7 +81,7 @@ class RecipesViewModel{
         return RecipeViewModel(
             name: recipe.name,
             cuisine: recipe.cuisine,
-            imageURL: imageURL,
+            imageURL: Self.firstURL ?? imageURL,
             uuid: recipe.uuid)
     }
 
