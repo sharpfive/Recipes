@@ -13,7 +13,10 @@ import CommonCrypto
 @MainActor
 struct ImageCacheFactory {
     func make() async -> ImageCaching {
-        let fileCache = await FileCache(temporaryDirectoryURL: URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true),
+        let temporaryDirectoryURL =
+            FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first ??
+            URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+        let fileCache = await FileCache(temporaryDirectoryURL: temporaryDirectoryURL,
                                                   fileManager: .default)
         let imageDownloader = ImageDataDownloader(urlSession: .shared)
         return ImageCache(fileCache: fileCache, imageDownloader: imageDownloader)
