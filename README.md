@@ -1,6 +1,8 @@
 ### Summary: Include screen shots or a video of your app highlighting its features
 This is a test project to grab a list of recipes. It uses SwiftUI, SwiftConcurrency, & Swift Testing. It shows a list of recipes. 
 
+![image](https://github.com/user-attachments/assets/15bdfa76-1f52-48f4-8484-3282458bc02e)
+
 ### Focus Areas: What specific areas of the project did you prioritize? Why did you choose to focus on these areas?
 
 I focused on making the app testable, by injecting more of each classes dependencies. I also made sure there were no duplicated file or network access.
