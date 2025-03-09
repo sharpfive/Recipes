@@ -42,7 +42,7 @@ As mentioned in the comments the performance is currently fast on an iPhone 12 m
 ### Weakest Part of the Project: What do you think is the weakest part of your project?
 
 #### UI
-UI is bare bones. But gets the job done. Anything I tried with padding made it look worse, so I kept it simple.
+UI is bare bones. But gets the job done. Anything I tried with padding made it look worse, so I kept it simple. There are many duplicated elements that could be extracted into a more coherent design system.
 
 ### Additional Information: Is there anything else we should know? Feel free to share any insights or constraints you encountered.
 #### DI
