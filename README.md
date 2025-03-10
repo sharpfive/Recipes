@@ -5,7 +5,7 @@ This is a test project to grab a list of recipes. It uses SwiftUI, SwiftConcurre
 
 ### Focus Areas: What specific areas of the project did you prioritize? Why did you choose to focus on these areas?
 
-I focused on making the app testable, by injecting more of each classes dependencies. I also made sure there were no duplicated file or network access.
+I focused on making the app testable, by injecting most dependencies. I also made sure there were no redundant file or network access.
 
 ### Time Spent: Approximately how long did you spend working on this project? How did you allocate your time?
 ~8 hours 
@@ -46,20 +46,19 @@ UI is bare bones. But gets the job done. Anything I tried with padding made it l
 
 ### Additional Information: Is there anything else we should know? Feel free to share any insights or constraints you encountered.
 #### DI
-We are using manual DI techniques. But not done at a comprehensive level. These scale pretty far. These implementations were done to get us to an acceptable level of test readiness. More could be done. Most of the ugly setup code is moved to Factory classes. But there is more setup than I'd like in the RecipesViewModel, due to the small nature of the project. I may have jumped through too many hoops to avoid explicitly unwrapping optionals (!) in the main bundle. But I allowed some in the test project.
+We are using manual DI techniques. But not done at a comprehensive level. These implementations were done to get us to an acceptable level of test readiness. More could be done. Most of the ugly setup code is moved to Factory classes. But there is more setup than I'd like in the RecipesViewModel. This due to the small nature of the project. In most larger code bases configuration and setup can be extracted to their own types. That was deemed overkill for the scope of this project.   I may have jumped through too many hoops to avoid explicitly unwrapping optionals (!) in the main bundle. But I allowed some in the test project.
 
 #### MainActor
-There are a number of types that are isolated to MainActor. Including some types that could be used off MainActor in other applications (e.g. ImageChache). This is intentional. Many devs introduce performance problems by jumping through hoops to avoid doing work on the Main thread. Switching threads is often more resource consuming than just doing the work on the main thread. That said, everything that occurs on the main thread should be fast. File system access was isolated to the FileSystemActor.
-
+There are a number of types that are isolated to MainActor. Including some types that could be used off MainActor in other applications (e.g. ImageCache). This is intentional. Many devs introduce performance problems by jumping through hoops to avoid doing work on the Main thread. Switching threads is often more resource consuming than just doing the work on the main thread. That said, everything that occurs on the main thread should be fast. File system access was isolated to the FileSystemActor.
 
 #### Test Coverage
-Test coverage is 84%, but not comprehensive. I've added comments to some places where more tests could be written. Along with ideas on what would be needed. The tests are not expected to be difficult, but would take more time than would make sense for a simple project.
+Test coverage is 84%, but not comprehensive. I've added comments to some places where more tests could be written. Along with ideas on what would be needed. The tests are not expected to be difficult to write, but would take more time than would make sense for a simple project.
 
 The ViewModel test are a good example of Detroit style tests that test interactions of a number of classes. Only the lowest level of dependencies are stubbed. The resulting tests focus on business level concepts. The goal is to test outcomes rather than interactions.
 
-There are tests using the test data provided. They are in the main bundle to allow sharing with the View Previews. This is another of improvement.
+There are tests using the test data json files provided. They are in the main bundle to allow sharing with the View Previews. This is another of improvement.
 
-In most cases I've tried to have one assertion/expect per test. This is uncommon in iOS test suites. But it a long standing best practice that improves visibility on what is failing. Especially when viewing test logs in CI. In any case, it's a good practice to encourage more refactoring of test setup code. Test code quality matters too.
+In most cases I've tried to have one assertion/expect per test. This is uncommon in iOS test suites. But it a long standing best practice that improves visibility on what is failing. Especially when viewing test logs in CI. It also encourages more refactoring of test setup code. Test code quality matters too.
 
 I'm still getting a feel for how to write comprehensive unit tests suites with Swift Testing, especially when using actor isolated types. I like the Swift Testing encourages smaller, focused test files. But Apple's recommendations of hydrating the objects in the initializer doesn't seem scalable. In any case, I tried a number of techniques that seem promising. Both lazy initialization of dependencies, and hydrating the System Under Test (sut) in a method worked well with dependencies that have different isolation.
 
